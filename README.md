@@ -1,7 +1,7 @@
 # Human VS Gablins
 ## Play a new advanture game! fight with goblins, get tresures and more!
 
-![Hangman Game](https://c0.klipartz.com/pngpicture/614/608/gratis-png-duende-verde-hobgoblin-harry-osborn-spider-man-arte.png)
+![Hangman Game](https://i.pinimg.com/170x/11/09/20/11092026689f9008584cb16384bf329b.jpg)
 ## Strategies used 
 - ArrayList
 - Scanner
