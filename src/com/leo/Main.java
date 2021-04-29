@@ -19,11 +19,13 @@ public class Main {
         System.out.println("Please choose a name for your human");
         String name = nameInput.next();
         Human human = new Human(name);
-        Goblins goblin1 = new Goblins("Aedirnian", 10, 3, 5);
-        Goblins goblin2 = new Goblins("Cidarian", 13, 5, 5);
-        Goblins goblin3 = new Goblins("Gnome", 15, 7, 3);
-        Goblins goblin4 = new Goblins("Kaedwenian", 20, 8, 2);
-        Goblins goblin5 = new Goblins("Kovirian", 30, 10, 0);
+        Shop shop = new Shop();
+        Goblins goblin = new Goblins();
+        Goblins goblin1 = new Goblins("Aedirnian", 10,2, 3, 5);
+        Goblins goblin2 = new Goblins("Cidarian", 13,4, 5, 5);
+        Goblins goblin3 = new Goblins("Gnome", 15,5, 8, 3);
+        Goblins goblin4 = new Goblins("Kaedwenian",15, 20, 8, 2);
+        Goblins goblin5 = new Goblins("Kovirian",25, 30, 10, 0);
         for(int i = 0; i < 6; i++){
             human.inventory.add("");
         }
@@ -33,7 +35,10 @@ public class Main {
             m.add("");
         }
         for(int i = 0; i < 6; i++){
-            m.add(treasure.treasurePosition.get(i), r.t);
+            m.set(treasure.treasurePosition.get(i), r.t);
+        }
+        for(int i = 0; i < 5; i++){
+            m.set(goblin.goblinPosition.get(i), r.g);
         }
         Scanner scanner = new Scanner(System.in);
         int position = 3;
@@ -47,7 +52,7 @@ while(true){
             position += 10;
             m.set(position, r.h);
         } else {
-            System.out.println("You are lost in woods! please turn back from North");
+            System.out.println("You are lost in woods! please turn back");
         }
     }
     if(move.equals("s")) {
@@ -56,7 +61,7 @@ while(true){
             position -= 10;
             m.set(position, r.h);
         } else {
-            System.out.println("You are lost in woods! please turn back from South");
+            System.out.println("You are lost in woods! please turn back");
         }
     }
     if(move.equals("e")) {
@@ -65,7 +70,7 @@ while(true){
             position += 1;
             m.set(position, r.h);
         } else {
-            System.out.println("You are lost in woods! please turn back from North East");
+            System.out.println("You are lost in woods! please turn back");
         }
     }
     if(move.equals("w")){
@@ -74,7 +79,7 @@ while(true){
         position-= 1;
         m.set(position, r.h);
         }else{
-    System.out.println("You are lost in woods! please turn back from North East");
+    System.out.println("You are lost in woods! please turn back");
         }
     }
     System.out.println(" -------------------------- ");
@@ -92,6 +97,29 @@ while(true){
     if(move.equals("status")){
         System.out.println(human);
     }
+    //shop
+    if(move.equals("shop")){
+        while(!move.equals("q")){
+            shop.shopping();
+            String input = scanner.next();
+            if(input.equals("s")){
+                if(human.getGold() < shop.strengthCost){
+                    System.out.println("sorry, you don't have enough gold!");
+                }else{
+                    human.setStrength(shop.strength);
+                    human.setGold(shop.strengthCost);
+                }
+            }
+            if(input.equals("a")){
+                if(human.getGold() < shop.strengthCost){
+                    System.out.println("sorry, you don't have enough gold!");
+                }else{
+                    human.setStrength(shop.attack);
+                    human.setGold(shop.attackCost);
+                }
+            }
+        }
+    }
     //Human treasure
     if(position == treasure.treasurePosition.get(0) && !move.equals("status")){
         if(treasure.treasurePosition.get(0) != null){
@@ -103,7 +131,7 @@ while(true){
             m.set(treasure.treasurePosition.get(0), "");
         }
     }
-    if(position == treasure.treasurePosition.get(1)){
+    if(position == treasure.treasurePosition.get(1) && !move.equals("status")){
         if(treasure.treasurePosition.get(1) != null){
             System.out.println("Here is a treasure!");
             System.out.println("You found a shield!");
@@ -113,7 +141,7 @@ while(true){
             m.set(treasure.treasurePosition.get(1), "");
         }
     }
-    if(position == treasure.treasurePosition.get(2)){
+    if(position == treasure.treasurePosition.get(2) && !move.equals("status")){
         if(treasure.treasurePosition.get(2) != null){
             System.out.println("Here is a treasure!");
             System.out.println("You found a watermelon!");
@@ -123,7 +151,7 @@ while(true){
             m.set(treasure.treasurePosition.get(2), "");
         }
     }
-    if(position == treasure.treasurePosition.get(3)){
+    if(position == treasure.treasurePosition.get(3) && !move.equals("status")){
         if(treasure.treasurePosition.get(3) != null){
             System.out.println("Here is a treasure!");
             System.out.println("You found 20 gold!");
@@ -132,7 +160,7 @@ while(true){
             m.set(treasure.treasurePosition.get(3), "");
         }
     }
-    if(position == treasure.treasurePosition.get(4)){
+    if(position == treasure.treasurePosition.get(4) && !move.equals("status")){
         if(treasure.treasurePosition.get(4) != null){
             System.out.println("Here is a treasure!");
             System.out.println("You found a helmet!");
@@ -142,7 +170,7 @@ while(true){
             m.set(treasure.treasurePosition.get(4), "");
         }
     }
-    if(position == treasure.treasurePosition.get(5)){
+    if(position == treasure.treasurePosition.get(5) && !move.equals("status")){
         if(treasure.treasurePosition.get(5) != null){
             System.out.println("Here is a treasure!");
             System.out.println("You found a spear!");
@@ -150,6 +178,166 @@ while(true){
             System.out.println("A Spear has been added to your inventory. 5 added to your attack ");
             human.setAttack(5);
             m.set(treasure.treasurePosition.get(4), "");
+        }
+    }
+    //Goblins attack
+    //goblin1
+    if(position == goblin.goblinPosition.get(0)){
+        if(goblin.goblinPosition.get(0) != null){
+            System.out.println(goblin1);
+            System.out.println("================================");
+            double randomAttack =  Math.floor((Math.random() * goblin1.getMaxAttack()) + goblin1.getMinAttack());
+            System.out.println("Goblin's random attack between " + goblin1.getMinAttack() + " and " + (goblin1.getMaxAttack()) + " is : "  + (int)randomAttack);
+            System.out.println("================================");
+            if(human.getStrength() < (int)randomAttack){
+                System.out.println(goblin1.name + " killed you!\nGame Over!");
+                System.out.println(human);
+                break;
+            }else{
+                while(goblin1.getStrength() > 0 ){
+                    int randomAttackVal = (~((int)randomAttack - 1));
+                        human.setStrength(randomAttackVal);
+                        goblin1.setStrength(human.getAttack());
+                        if(human.getStrength() < 0){
+                            System.out.println(goblin1.name + " killed you!\nGame Over!");
+                            System.out.println(human);
+                            break;
+                        }
+                        if(goblin1.getStrength() < 0){
+                            break;
+                        }
+                }
+                  if(human.getStrength() > 0){
+                      System.out.println("Congratulations! you killed " + goblin1.name);
+                      human.setGold(goblin1.getGold());
+                      System.out.println("Your current status is: \n" + human);
+                  }
+            }
+            m.set(goblin.goblinPosition.get(0), "");
+        }
+    }
+    //goblin2
+    if(position == goblin.goblinPosition.get(1)){
+        if(goblin.goblinPosition.get(1) != null){
+            System.out.println(goblin2);
+            System.out.println("================================");
+            double randomAttack = Math.floor((Math.random() * goblin2.getMaxAttack()) + goblin2.getMinAttack());
+
+            System.out.println("Goblin's random attack between " + goblin2.getMinAttack() + " and " + (goblin2.getMaxAttack()+1) + " is : "  + (int)randomAttack);
+            System.out.println("================================");
+            if(human.getStrength() < (int)randomAttack){
+                System.out.println(goblin2.name + " killed you!\nGame Over!");
+                break;
+            }else{
+                while(goblin2.getStrength() > 0 ){
+                    int randomAttackVal = (~((int)randomAttack - 1));
+                    human.setStrength(randomAttackVal);
+                    goblin2.setStrength(human.getAttack());
+                    if(human.getStrength() < 0){
+                        System.out.println(goblin2.name + " killed you!\nGame Over!");
+                        System.out.println(human);
+                        break;
+                    }
+                }
+                if(human.getStrength() > 0){
+                    System.out.println("Congratulations! you killed " + goblin2.name);
+                    human.setGold(goblin2.getGold());
+                    System.out.println("Your current status is: \n" + human);
+                }
+            }
+        }
+    }
+    //goblin3
+    if(position == goblin.goblinPosition.get(2)){
+        if(goblin.goblinPosition.get(2) != null){
+            System.out.println(goblin3);
+            System.out.println("================================");
+            double randomAttack = Math.floor((Math.random() * goblin3.getMaxAttack()) + goblin3.getMinAttack());
+
+            System.out.println("Goblin's random attack between " + goblin3.getMinAttack() + " and " + (goblin3.getMaxAttack()+1) + " is : "  + (int)randomAttack);
+            System.out.println("================================");
+            if(human.getStrength() < randomAttack){
+                System.out.println(goblin3.name + " killed you!\nGame Over!");
+                System.out.println(human);
+                break;
+            }else{
+                while(goblin3.getStrength() > 0 ){
+                    int randomAttackVal = (~((int)randomAttack - 1));
+                    human.setStrength(randomAttackVal);
+                    goblin3.setStrength(human.getAttack());
+                    if(human.getStrength() < 0){
+                        System.out.println(goblin3.name + " killed you!\nGame Over!");
+                        break;
+                    }
+                }
+                if(human.getStrength() > 0){
+                    System.out.println("Congratulations! you killed " + goblin3.name);
+                    human.setGold(goblin3.getGold());
+                    System.out.println("Your current status is: \n" + human);
+                }
+            }
+        }
+    }
+    //goblin4
+    if(position == goblin.goblinPosition.get(3)){
+        if(goblin.goblinPosition.get(3) != null){
+            System.out.println(goblin4);
+            System.out.println("================================");
+            double randomAttack = Math.floor((Math.random() * goblin4.getMaxAttack()) + goblin4.getMinAttack());
+
+            System.out.println("Goblin's random attack between " + goblin4.getMinAttack() + " and " + (goblin4.getMaxAttack()+1) + " is : "  + (int)randomAttack);
+            System.out.println("================================");
+            if(human.getStrength() < (int)randomAttack){
+                System.out.println(goblin4.name + " killed you!\nGame Over!");
+                System.out.println(human);
+                break;
+            }else{
+                while(goblin4.getStrength() > 0 ){
+                    int randomAttackVal = (~((int)randomAttack - 1));
+                    human.setStrength(randomAttackVal);
+                    goblin4.setStrength(human.getAttack());
+                    if(human.getStrength() < 0){
+                        System.out.println(goblin4.name + " killed you!\nGame Over!");
+                        break;
+                    }
+                }
+                if(human.getStrength() > 0){
+                    System.out.println("Congratulations! you killed " + goblin4.name);
+                    human.setGold(goblin4.getGold());
+                    System.out.println("Your current status is: \n" + human);
+                }
+            }
+        }
+    }
+    //goblin5
+    if(position == goblin.goblinPosition.get(4)){
+        if(goblin.goblinPosition.get(4) != null){
+            System.out.println(goblin5);
+            System.out.println("================================");
+            double randomAttack = Math.floor((Math.random() * goblin5.getMaxAttack()) + goblin5.getMinAttack());
+
+            System.out.println("Goblin's random attack between " + goblin5.getMinAttack() + " and " + (goblin5.getMaxAttack()+1) + " is : "  + (int)randomAttack);
+            System.out.println("================================");
+            if(human.getStrength() < (int)randomAttack){
+                System.out.println(goblin5.name + " killed you!\nGame Over!");
+                System.out.println(human);
+                break;
+            }else{
+                while(goblin5.getStrength() > 0 ){
+                    int randomAttackVal = (~((int)randomAttack - 1));
+                    human.setStrength(randomAttackVal);
+                    goblin5.setStrength(human.getAttack());
+                    if(human.getStrength() < 0){
+                        System.out.println(goblin5.name + " killed you!\nGame Over!");
+                        break;
+                    }
+                }
+                if(human.getStrength() > 0){
+                    System.out.println("Congratulations! you killed " + goblin5.name);
+                    human.setGold(goblin5.getGold());
+                    System.out.println("Your current status is: \n" + human);
+                }
+            }
         }
     }
 }

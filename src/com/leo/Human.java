@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class Human {
     ArrayList<String> inventory = new ArrayList<>(5);
     String name = "anonymous";
-    int strength = 10;
-    int attack = 5;
-    int gold = 0;
+    private int strength = 10;
+    private int attack = 5;
+    private int gold = 0;
 
     public Human(String name){
         this.name = name;
@@ -28,8 +28,17 @@ public class Human {
     public void setInventory(int index, String item){
         this.inventory.set(index, item);
     }
+    public int getStrength(){
+        return this.strength;
+    }
+    public int getAttack(){
+        return this.attack;
+    }
+    public int getGold(){
+        return this.gold;
+    }
     @Override
     public String toString(){
-        return " Name: " + this.name +"\n Strength: " + this.strength + "\n Attack: " + this.attack + "\n Gold: " + this.gold + "\n Inventory: " + this.inventory;
+        return " Name: " + this.name +"\n Strength: " + this.getStrength() + "\n Attack: " + this.getAttack() + "\n Gold: " + this.getGold() + "\n Inventory: " + this.inventory;
     }
 }
