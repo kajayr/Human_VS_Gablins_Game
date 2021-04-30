@@ -37,6 +37,7 @@ public class Human {
     public int getGold(){
         return this.gold;
     }
+
     @Override
     public String toString(){
         return " Name: " + this.name +"\n Strength: " + this.getStrength() + "\n Attack: " + this.getAttack() + "\n Gold: " + this.getGold() + "\n Inventory: " + this.inventory;
