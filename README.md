@@ -7,3 +7,5 @@
 - Human
 - Treasures
 - Goblins
+- Guide Page
+- Shop
