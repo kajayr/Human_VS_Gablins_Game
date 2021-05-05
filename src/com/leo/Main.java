@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
         Resources r = new Resources();
         Treasure treasure = new Treasure();
@@ -13,7 +12,17 @@ public class Main {
         Scanner nameInput = new Scanner(System.in);
         info.getInfo();
         System.out.println("Please choose a name for your human");
-        String name = nameInput.next();
+        String name = "";
+        try{
+            name = nameInput.next();
+            if(name.length() > 10){
+                throw new Exception();
+            }
+        }catch (Exception e){
+            System.out.println("The name should not be more than 10 characters");
+            System.out.println("Please choose a name for your human (less than 10 characters)");
+            name = nameInput.next();
+        }
         Human human = new Human(name);
         Shop shop = new Shop();
         Goblins goblin = new Goblins();
@@ -38,10 +47,19 @@ public class Main {
         }
         Scanner scanner = new Scanner(System.in);
         int position = 3;
-while(true){
+        boolean isWinning = true;
+while(isWinning){
     m.set(position, r.h);
     System.out.println("choose your move: ");
-    String move = scanner.next();
+    String move = "";
+    try{
+        move = scanner.next();
+        if(move.length() > 1){
+            throw new Exception();
+        }
+    }catch(Exception e){
+        System.out.println("The Character you enter should be either n, s, w, e, i, status, or shop");
+    }
     if(move.equals("n")) {
         if (position < 40) {
             m.set(position, "");
@@ -88,4 +106,8 @@ while(true){
     shop.shoppingProcess(move, scanner, human);
     treasure.treasurePositions(position, treasure, move, human, m);
     goblin.goblinCharacters(position, goblin, goblin1, goblin2, goblin3, goblin4, goblin5, human,m);
+    if(goblin.goblinPosition.size() == 0){
+        System.out.println("You killed all the Goblins! You WON the game!");
+        isWinning = false;
+    }
 }}}

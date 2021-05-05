@@ -80,6 +80,7 @@ public class Goblins {
                         System.out.println("Congratulations! you killed " + goblin1.name);
                         human.setGold(goblin1.getGold());
                         goblin1.setAlive(false);
+      //                  goblinPosition.remove(0);
                         System.out.println("Your current status is: \n" + human);
                     }
                 }
